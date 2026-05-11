@@ -67,6 +67,41 @@
     }
   });
 
+// ── Contact Form ──
+const form = document.getElementById('contactForm');
+
+form.addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch('https://formspree.io/f/meenvzpa', {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      form.reset();
+
+      document.getElementById('formSuccess').style.display = 'block';
+
+      setTimeout(() => {
+        document.getElementById('formSuccess').style.display = 'none';
+      }, 5000);
+
+    } else {
+      alert('Something went wrong. Please try again.');
+    }
+
+  } catch (error) {
+    alert('Network error. Please try again.');
+  }
+});
+
   // ── Mobile Nav ──
   function openMobileNav() {
     document.getElementById('mobileNav').classList.add('open');
